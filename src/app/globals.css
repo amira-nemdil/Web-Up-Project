@@ -21,6 +21,9 @@ body {
 }
 
 @layer utilities {
+  .border-border {
+    border-color: var(--sidebar-border);
+  }
   .text-balance {
     text-wrap: balance;
   }
