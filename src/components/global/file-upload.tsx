@@ -57,7 +57,9 @@ const FileUpload = ({ apiEndpoint, onChange, value }: Props) => {
           onChange(res?.[0].url)
         }}
         onUploadError={(error: Error) => {
-          console.log(error)
+          console.error('Upload failed: ', error);
+          // You can log more details here if available
+          alert('Upload failed: ' + error.message); // Optional alert for better feedback
         }}
       />
     </div>

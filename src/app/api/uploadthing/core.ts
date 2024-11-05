@@ -21,8 +21,14 @@ export const ourFileRouter = {
     .middleware(authenticateUser)
     .onUploadComplete(() => {}),
   agencyLogo: f({ image: { maxFileSize: '4MB', maxFileCount: 1 } })
+    
     .middleware(authenticateUser)
-    .onUploadComplete(() => {}),
+    .onUploadComplete((file) => {
+      // Example of how you might handle the uploaded file metadata
+      console.log('File uploaded successfully:', file);
+      // Save file information to your database or return the URL
+      // e.g., return { url: file.url };
+    }),
   media: f({ image: { maxFileSize: '4MB', maxFileCount: 1 } })
     .middleware(authenticateUser)
     .onUploadComplete(() => {}),
