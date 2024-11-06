@@ -91,7 +91,7 @@ const AgencyDetails = ({ data }: Props) => {
   const isLoading = form.formState.isSubmitting
 
   useEffect(() => {
-    if (data) {
+    if (data && (form.getValues().name !== data.name || form.getValues().companyEmail !== data.companyEmail)) {
       form.reset({
         name: data.name || '',
         companyEmail: data.companyEmail || '',
@@ -105,7 +105,9 @@ const AgencyDetails = ({ data }: Props) => {
         agencyLogo: data.agencyLogo || '',
       });
     }
-  }, [data]); // Ensure this effect runs only when `data` changes
+  }, [data]);
+  
+  
   
 
   const handleSubmit = async (values: z.infer<typeof FormSchema>) => {

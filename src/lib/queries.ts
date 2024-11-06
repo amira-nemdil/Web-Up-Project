@@ -8,13 +8,7 @@ import { clerkClient } from "@clerk/clerk-sdk-node";
 
 import {
     Agency,
-    Lane,
     Plan,
-    Prisma,
-    Role,
-    SubAccount,
-    Tag,
-    Ticket,
     User,
   } from '@prisma/client'
 
@@ -216,7 +210,7 @@ export const initUser = async (newUser : Partial<User>)=> {
   const user = await currentUser()
   if(!user) return
 
-  const Userdata = await db.user.upsert({
+  const UserData = await db.user.upsert({
     where: {
       email: user.emailAddresses[0].emailAddress,
     },
@@ -235,7 +229,7 @@ export const initUser = async (newUser : Partial<User>)=> {
     },
   })
 
-  return Userdata
+  return UserData
 }
 
 export const upsertAgency = async (agency: Agency, price?: Plan) => {
