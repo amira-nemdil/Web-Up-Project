@@ -112,9 +112,13 @@ const AgencyDetails = ({ data }: Props) => {
 
   const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
     try {
-      let newUserData
-      let custId
+      // Initialize user data
+      let newUserData;
       if (!data?.id) {
+        // New user initialization for a new agency
+        newUserData = await initUser({ role: 'AGENCY_OWNER' });
+  
+        // Optional: if bodyData is used elsewhere, handle it here
         const bodyData = {
           email: values.companyEmail,
           name: values.name,
@@ -135,14 +139,16 @@ const AgencyDetails = ({ data }: Props) => {
             postal_code: values.zipCode,
             state: values.zipCode,
           },
-        }
+        };
+  
+        // Use bodyData if you need to create a customer or perform another action here
       }
-      newUserData = await initUser({ role: 'AGENCY_OWNER' })
-      if (!data?.id)
-        return
-
+  
+      // Proceed to create or update the agency
+      const agencyId = data?.id || v4(); // Generate a new ID if not present
+  
       await upsertAgency({
-        id: data?.id ? data.id : v4(),
+        id: agencyId,
         address: values.address,
         agencyLogo: values.agencyLogo,
         city: values.city,
@@ -157,24 +163,26 @@ const AgencyDetails = ({ data }: Props) => {
         companyEmail: values.companyEmail,
         connectAccountId: '',
         goal: 5,
-      })
+      });
+  
+      // Show success toast
       toast({
         title: 'Created Agency',
-      })
-
-      
-      return router.refresh()
-        
-      
-    } catch(error) {
-      console.log(error)
+      });
+  
+      // Refresh the page
+      return router.refresh();
+  
+    } catch (error) {
+      console.log(error);
       toast({
         variant: 'destructive',
-        title: 'Oppse!',
-        description: 'could not create your agency',
-      })
+        title: 'Oops!',
+        description: 'Could not create your agency',
+      });
     }
-}
+  };
+  
   
   const handleDeleteAgency = async () => {
     if (!data?.id) return
