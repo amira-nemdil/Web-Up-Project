@@ -1,7 +1,10 @@
-import React from 'react'
+import React from "react";
+import {stripe} from '@/lib/stripe';
 
-const Page = ({params}: {params:{agencyId:string}})=>{
-    return <div>{params.agencyId}</div>
+type Props ={
+    params : {agencyId :string}
 }
 
-export default Page
+const page =({params }:Props) =>{
+    return <div>page </div>
+}
