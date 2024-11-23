@@ -27,7 +27,7 @@ export default function Home(){
             webup
           </h1>
         </div>
-        <div className="flex justify-center items-center relative md:mt-[-70px]">
+        <div className="flex justify-center items-center relative md:mt-[-10px]">
           <Image
             src={'/assets/preview.png'}
             alt="banner image"
