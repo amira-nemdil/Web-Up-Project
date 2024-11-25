@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import AgencyDetails from "@/components/forms/agency-details";
 import Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
+import { checkCustomRoutes } from "next/dist/lib/load-custom-routes";
 
 
 const Page = async ({
@@ -48,7 +49,26 @@ const Page = async ({
         },
         { stripeAccount: agencyDetails.connectAccountId }
       )
+      sessions =checkoutSessions.data
+      totalClosedSessions =checkoutSessions.data.filter(
+        (sessions)=>sessions.status ==='complete'
+      )
+      .map((sessions)=>({
+        ...sessions,
+        created: new Date(sessions.created).toLocaleDateString(),
+        amount_total: sessions.amount_total ? sessions.amount_total / 100 : 0,
+      }))
+      
+      totalPendingSessions = checkoutSessions.data
+      .filter((session) => session.status === 'open')
+      .map((session) => ({
+        ...session,
+        created: new Date(session.created).toLocaleDateString(),
+        amount_total: session.amount_total ? session.amount_total / 100 : 0,
+      }))
     }
+
+   
 
     return <div>{params.agencyId}</div>
 }
