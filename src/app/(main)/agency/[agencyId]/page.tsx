@@ -1,5 +1,5 @@
-import CircleProgress from '@/components/global/circle-progress'
-import Link from 'next/link'
+import CircleProgress from '@/components/global/circle-progress';
+import Link from 'next/link';
 import React from "react";
 import { db } from "@/lib/db";
 import AgencyDetails from "@/components/forms/agency-details";
