@@ -26,6 +26,12 @@ const Page=({
           },  
         });  
 
+        const subaccounts= await db.subAccount.findUnique({  
+            where: {  
+              id: params.agencyId,  
+            },  
+          });  
+
     }
     return <div>{params.agencyId }</div>
 
