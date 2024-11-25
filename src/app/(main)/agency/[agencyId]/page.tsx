@@ -58,7 +58,7 @@ const Page = async ({
         created: new Date(sessions.created).toLocaleDateString(),
         amount_total: sessions.amount_total ? sessions.amount_total / 100 : 0,
       }))
-      
+
       totalPendingSessions = checkoutSessions.data
       .filter((session) => session.status === 'open')
       .map((session) => ({
@@ -66,6 +66,10 @@ const Page = async ({
         created: new Date(session.created).toLocaleDateString(),
         amount_total: session.amount_total ? session.amount_total / 100 : 0,
       }))
+
+      net = +totalClosedSessions
+      .reduce((total, session) => total + (session.amount_total || 0), 0)
+      .toFixed(2)
     }
 
    
