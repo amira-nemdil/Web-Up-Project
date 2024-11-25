@@ -70,6 +70,10 @@ const Page = async ({
       net = +totalClosedSessions
       .reduce((total, session) => total + (session.amount_total || 0), 0)
       .toFixed(2)
+
+      potentialIncome = +totalPendingSessions
+      .reduce((total, session) => total + (session.amount_total || 0), 0)
+      .toFixed(2)
     }
 
    
