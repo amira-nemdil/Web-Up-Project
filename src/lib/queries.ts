@@ -19,7 +19,7 @@ import {
   CreateFunnelFormSchema,
   CreateMediaType,
   UpsertFunnelPage,
-} from '@/types'
+} from '@/lib/types'
 
 import { z } from 'zod'
 import { revalidatePath } from 'next/cache'
