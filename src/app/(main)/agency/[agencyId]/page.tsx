@@ -40,6 +40,14 @@ const Page = async ({
       const response = await stripe.accounts.retrieve({
         stripeAccount: agencyDetails.connectAccountId,
       })
+      currency = response.default_currency?.toUpperCase() || 'USD'
+      const checkoutSessions = await stripe.checkout.sessions.list(
+        {
+          created: { gte: startDate, lte: endDate },
+          limit: 100,
+        },
+        { stripeAccount: agencyDetails.connectAccountId }
+      )
     }
 
     return <div>{params.agencyId}</div>
