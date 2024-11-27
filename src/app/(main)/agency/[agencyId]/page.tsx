@@ -25,7 +25,11 @@ const Page =async({
   })
   
   if (!agencyDetails) return
-  
+   const subaccounts = await db.subAccount.findMany({
+    where:{
+      agencyId:params.agencyId,
+    },
+   })
 
   return <div>{params.agencyId}</div>
 }
