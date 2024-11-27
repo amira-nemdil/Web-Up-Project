@@ -75,31 +75,50 @@ const AgencyDetails = ({ data }: Props) => {
     mode: 'onChange',
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      name: data?.name,
-      companyEmail: data?.companyEmail,
-      companyPhone: data?.companyPhone,
-      whiteLabel: data?.whiteLabel || false,
-      address: data?.address,
-      city: data?.city,
-      zipCode: data?.zipCode,
-      state: data?.state,
-      country: data?.country,
-      agencyLogo: data?.agencyLogo,
+      name: data?.name || '',
+      companyEmail: data?.companyEmail || '',
+      companyPhone: data?.companyPhone || '',
+      whiteLabel: data?.whiteLabel ?? false, // Use ?? to avoid switching to uncontrolled
+      address: data?.address || '',
+      city: data?.city || '',
+      zipCode: data?.zipCode || '',
+      state: data?.state || '',
+      country: data?.country || '',
+      agencyLogo: data?.agencyLogo || '',
     },
-  })
+  });
+  
   const isLoading = form.formState.isSubmitting
 
   useEffect(() => {
-    if (data) {
-      form.reset(data)
+    if (data && (form.getValues().name !== data.name || form.getValues().companyEmail !== data.companyEmail)) {
+      form.reset({
+        name: data.name || '',
+        companyEmail: data.companyEmail || '',
+        companyPhone: data.companyPhone || '',
+        whiteLabel: data.whiteLabel || false,
+        address: data.address || '',
+        city: data.city || '',
+        zipCode: data.zipCode || '',
+        state: data.state || '',
+        country: data.country || '',
+        agencyLogo: data.agencyLogo || '',
+      });
     }
-  }, [data])
+  }, [data]);
+  
+  
+  
 
   const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
     try {
-      let newUserData
-      let custId
+      // Initialize user data
+      let newUserData;
       if (!data?.id) {
+        // New user initialization for a new agency
+        newUserData = await initUser({ role: 'AGENCY_OWNER' });
+  
+        // Optional: if bodyData is used elsewhere, handle it here
         const bodyData = {
           email: values.companyEmail,
           name: values.name,
@@ -120,26 +139,16 @@ const AgencyDetails = ({ data }: Props) => {
             postal_code: values.zipCode,
             state: values.zipCode,
           },
-        }
-
-        const customerResponse = await fetch('/api/stripe/create-customer', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(bodyData),
-        })
-        const customerData: { customerId: string } =
-          await customerResponse.json()
-        custId = customerData.customerId
+        };
+  
+        // Use bodyData if you need to create a customer or perform another action here
       }
-
-      newUserData = await initUser({ role: 'AGENCY_OWNER' })
-      if (!data?.customerId && !custId) return
-
-      const response = await upsertAgency({
-        id: data?.id ? data.id : v4(),
-        customerId: data?.customerId || custId || '',
+  
+      // Proceed to create or update the agency
+      const agencyId = data?.id || v4(); // Generate a new ID if not present
+  
+      await upsertAgency({
+        id: agencyId,
         address: values.address,
         agencyLogo: values.agencyLogo,
         city: values.city,
@@ -154,23 +163,27 @@ const AgencyDetails = ({ data }: Props) => {
         companyEmail: values.companyEmail,
         connectAccountId: '',
         goal: 5,
-      })
+      });
+  
+      // Show success toast
       toast({
         title: 'Created Agency',
-      })
-      if (data?.id) return router.refresh()
-      if (response) {
-        return router.refresh()
-      }
+      });
+  
+      // Refresh the page
+      return router.refresh();
+  
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast({
         variant: 'destructive',
-        title: 'Oppse!',
-        description: 'could not create your agency',
-      })
+        title: 'Oops!',
+        description: 'Could not create your agency',
+      });
     }
-  }
+  };
+  
+  
   const handleDeleteAgency = async () => {
     if (!data?.id) return
     setDeletingAgency(true)
