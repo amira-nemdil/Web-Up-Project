@@ -3,6 +3,11 @@ import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";  
 import { Chicle } from "next/font/google";  
 import React from "react";  
+import Unauthorized from "@/components/unauthorized";
+import {
+    getNotificationAndUser,
+    verifyAndAcceptInvitation,
+  } from '@/lib/queries'
 
 type Props = {  
   children: React.ReactNode;  
@@ -21,7 +26,16 @@ const layout = async ({ children, params }: Props) => {
     return redirect("/agency");  
   }  
 
-  return <div>layout</div>;  
+  if (
+    user.privateMetadata.role !== 'AGENCY_OWNER' &&
+    user.privateMetadata.role !=='AGENCY_ADMIN'
+  )
+
+
+  return <Unauthorized />
+
+  let alNoti: any=[]
+  const notification= await getNotificationAndUser(agencyId)
 };  
 
 export default layout;
