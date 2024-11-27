@@ -13,6 +13,7 @@ const Page =({
   let net=0
   let potentialIncome
   let closingRate=0
+  const currentYear =new Date().getFullYear()
 
   return <div>{params.agencyId}</div>
 }
