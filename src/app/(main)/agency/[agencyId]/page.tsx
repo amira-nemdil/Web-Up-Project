@@ -1,6 +1,7 @@
 import React from "react";
+import { db } from "@/lib/db";
 
-const Page =({
+const Page =async({
   params,
 }: {
     params :{agencyId:string}
@@ -14,6 +15,17 @@ const Page =({
   let potentialIncome
   let closingRate=0
   const currentYear =new Date().getFullYear()
+  const startDate =new Date(`${currentYear}-01-01T00:00:00Z`).getTime() /1000
+  const endDate =new Date(`${currentYear}-12-31T23:59:59Z`).getTime() /1000
+
+  const agencyDetails =await db.agency.findUnique({
+    where:{
+    id: params.agencyId,
+   },
+  })
+  
+  if (!agencyDetails) return
+  
 
   return <div>{params.agencyId}</div>
 }
