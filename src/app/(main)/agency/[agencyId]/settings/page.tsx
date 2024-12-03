@@ -45,7 +45,7 @@ const SubaccountSettingPage = async ({ params }: Props) => {
           type="subaccount"
           id={params.subaccountId}
           subAccounts={subAccounts}
-          userData={userDetails}
+        
         />
       </div>
     </BlurPage>
