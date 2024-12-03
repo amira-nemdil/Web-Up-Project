@@ -25,6 +25,7 @@ import Link from 'next/link'
 
 import React from 'react'
 import DeleteButton from './_components/delete-button'
+import CreateSubaccountButton from './_components/create-subaccount-btn'
 
 
 type Props = {
@@ -38,7 +39,11 @@ const AllSubaccountsPage = async ({ params }: Props) => {
   return (
     <AlertDialog>
       <div className="flex flex-col ">
-        
+        <CreateSubaccountButton
+         user={user}
+         id={params.agencyId}
+         className='w-[200px] self-end m-6'
+        />
         <Command className="rounded-lg bg-transparent">
           <CommandInput placeholder="Search Account..." />
           <CommandList>
