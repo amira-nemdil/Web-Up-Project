@@ -27,7 +27,7 @@ const layout = async ({ children, params }: Props) => {
     return redirect('/agency')
   }
 
-  if (
+  if ( 
     user.privateMetadata.role !== 'AGENCY_OWNER' &&
     user.privateMetadata.role !== 'AGENCY_ADMIN'
   )
