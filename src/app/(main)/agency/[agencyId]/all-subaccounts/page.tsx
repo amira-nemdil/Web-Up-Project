@@ -24,6 +24,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import React from 'react'
+import DeleteButton from './_components/delete-button'
 
 
 type Props = {
@@ -93,6 +94,9 @@ const AllSubaccountsPage = async ({ params }: Props) => {
                         <AlertDialogCancel className="mb-2">
                           Cancel
                         </AlertDialogCancel>
+                        <AlertDialogAction className='bg-destructive hover:bg-destructive'>
+                          <DeleteButton subaccountId={subaccount.id}/>
+                        </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
                   </CommandItem>
