@@ -1,12 +1,43 @@
-import React from "react";
+import { db } from '@/lib/db'
+import React from 'react'
+import { Plus } from 'lucide-react'
+import { currentUser } from '@clerk/nextjs/server'
 
-function team() {  
-    return (  
-      <div>  
-        team 
-      </div>  
-    );  
-} 
+type Props = {
+  params: { agencyId: string }
+}
 
-export default team
+const TeamPage = async ({ params }: Props) => {
+  const authUser = await currentUser()
+  const teamMembers = await db.user.findMany({
+    where: {
+      Agency: {
+        id: params.agencyId,
+      },
+    },
+    include: {
+      Agency: { include: { SubAccount: true } },
+      Permissions: { include: { SubAccount: true } },
+    },
+  })
 
+  if (!authUser) return null
+  const agencyDetails = await db.agency.findUnique({
+    where: {
+      id: params.agencyId,
+    },
+    include: {
+      SubAccount: true,
+    },
+  })
+
+  if (!agencyDetails) return
+
+  return (
+  <DataTable>
+    
+  </DataTable>
+)
+}
+
+export default TeamPage
