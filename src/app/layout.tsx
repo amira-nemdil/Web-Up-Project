@@ -3,6 +3,8 @@ import {DM_Sans} from 'next/font/google'
 import "./globals.css";
 import {dark} from '@clerk/themes'
 import { ThemeProvider } from "@/providers/theme-provider";
+import ModalProvider from "@/providers/modal-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 const font = DM_Sans({ subsets : ['latin']})
 
@@ -33,6 +35,10 @@ export default function RootLayout({
       
         </ThemeProvider>
         </body>
+        <ModalProvider>
+          {children}
+          <Toaster/>
+        </ModalProvider>
     </html>
     
   );
