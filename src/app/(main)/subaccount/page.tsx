@@ -34,6 +34,6 @@ const SubAccountMainPage=async({searchParams}: Props)=>{
   }
 
 
-  return <div>SubAcoountMainPage</div>
+  return <Unauthorized/>
 }
 export default SubAccountMainPage
