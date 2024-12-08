@@ -9,7 +9,7 @@ import {
 import Image from "next/image";
 import { db } from "@/lib/db";
 import { CheckCircleIcon } from "lucide-react";
-import { Button } from "react-day-picker";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 type Props={
@@ -60,7 +60,7 @@ const LaunchPadPage= async ({params,searchParams}:Props)=>{
             />
             <p>save the website as a shortcut on your mobile device</p>
             </div>
-            <button style={{ backgroundColor: 'blue', padding: '10px 20px', fontSize: '16px' }}>Start</button>
+            <Button>Start </Button>
           </div>
 
           <div className="flex justify-between items-center w-full border p-4 rounded-lg gap-2">
@@ -74,7 +74,7 @@ const LaunchPadPage= async ({params,searchParams}:Props)=>{
             />
             <p>Connect your stripe account to accept payment and see your dashboard</p>
             </div>
-            <button style={{ backgroundColor: 'blue', padding: '10px 20px', fontSize: '16px' }}>Start</button>
+            <Button>Start </Button>
           </div>
 
           <div className="flex justify-between items-center w-full border p-4 rounded-lg gap-2">
