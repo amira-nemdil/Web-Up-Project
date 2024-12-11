@@ -26,9 +26,11 @@ const PipelinePage = async ({ params }: Props) => {
     where: { subAccountId: params.subaccountId },
   })
 
+
   const lanes = (await getLanesWithTicketAndTags(
     params.pipelineId
   )) as LaneDetail[]
+
 
   return (
     <Tabs
@@ -66,5 +68,8 @@ const PipelinePage = async ({ params }: Props) => {
     </Tabs>
   )
 }
+
+
+
 
 export default PipelinePage
