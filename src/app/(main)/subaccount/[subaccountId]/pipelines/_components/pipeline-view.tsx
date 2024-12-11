@@ -176,4 +176,4 @@ const PipelineView = ({
   )
 }
 
-export default PipelineView
+export default PipelineView 
