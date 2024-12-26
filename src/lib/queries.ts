@@ -639,14 +639,14 @@ export const updateTicketsOrder = async (tickets: Ticket[]) => {
           laneId: ticket.laneId,
         },
       })
-    )
+    );
 
     await db.$transaction(updateTrans)
     console.log('🟢 Done reordered 🟢')
   } catch (error) {
     console.log(error, '🔴 ERROR UPDATE TICKET ORDER')
   }
-}
+};
 
 export const upsertLane = async (lane: Prisma.LaneUncheckedCreateInput) => {
   let order: number
