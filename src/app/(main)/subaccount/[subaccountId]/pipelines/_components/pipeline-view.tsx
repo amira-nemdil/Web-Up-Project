@@ -157,6 +157,12 @@ const PipelineView = ({
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
+              <div className="flex mt-4">
+                {allLanes.map((lane,index) => (
+                    <PipelineLane />
+                    ))}
+                    {provided.placeholder}
+                </div>
             </div>
           )}
         </Droppable>
