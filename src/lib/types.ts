@@ -91,7 +91,8 @@ import {
     favicon: z.string().optional(),
   })
   
-  export type PipelineDetailsWithLanesCardsTagsTickets = Prisma.PromiseReturnType<
+  export type PipelineDetailsWithLanesCardsTagsTickets = Prisma.
+  PromiseReturnType<
     typeof getPipelineDetails
   >
   
