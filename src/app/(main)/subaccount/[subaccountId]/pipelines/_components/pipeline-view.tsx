@@ -13,6 +13,8 @@ import { Flag, Plus } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd'
+import PipelineLane from './pipeline-lane'
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 type Props = {
   lanes: LaneDetail[]
@@ -134,7 +136,8 @@ const PipelineView = ({
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="bg-white/60 dark:bg-background/60 rounded-xl p-4 use-automation-zoom-in">
+      <div className="bg-white/60 dark:bg-background/60 rounded-xl p-4
+      use-automation-zoom-in">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl">{pipelineDetails?.name}</h1>
           <Button
@@ -176,7 +179,8 @@ const PipelineView = ({
           )}
         </Droppable>
         {allLanes.length == 0 && (
-          <div className="flex items-center justify-center w-full flex-col">
+          <div className="flex items-center justify-center w-full
+           flex-col">
             <div className="opacity-100">
               <Flag
                 width="100%"
