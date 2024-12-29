@@ -100,7 +100,8 @@ import {
     name: z.string().min(1),
   })
   
-  export type TicketWithTags = Prisma.PromiseReturnType<typeof getTicketsWithTags>
+  export type TicketWithTags = Prisma.PromiseReturnType<typeof 
+  getTicketsWithTags>
   
   const currencyNumberRegex = /^\d+(\.\d{1,2})?$/
   
