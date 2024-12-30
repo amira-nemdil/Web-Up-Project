@@ -24,8 +24,8 @@ const CustomModal = ({ children, defaultOpen, subheading, title }: Props) => {
       onOpenChange={setClose}
     >
       <DialogContent className="overflow-scroll md:max-h-[700px] md:h-fit h-screen bg-card">
+      <DialogTitle className="text-lg font-semibold leading-none tracking-tight"></DialogTitle>
         <DialogHeader className="pt-8 text-left">
-          <DialogTitle className="text-2xl font-bold">{title}</DialogTitle>
           <DialogDescription>{subheading}</DialogDescription>
           {children}
         </DialogHeader>
