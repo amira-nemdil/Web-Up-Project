@@ -160,13 +160,13 @@ const TicketForm = ({ getNewTicket, laneId, subaccountId }: Props) => {
             <FormField
               disabled={isLoading}
               control={form.control}
-              name="name"
+              name="value"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Ticket Name</FormLabel>
+                  <FormLabel>Ticket Value</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Name"
+                      placeholder="Value"
                       {...field}
                     />
                   </FormControl>
