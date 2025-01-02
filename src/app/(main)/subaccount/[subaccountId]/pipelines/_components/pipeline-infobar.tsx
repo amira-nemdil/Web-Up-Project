@@ -35,7 +35,8 @@ const PipelineInfoBar = ({ pipelineId, pipelines, subAccountId }: Props) => {
     setOpenModal(
       <CustomModal
         title="Create A Pipeline"
-        subheading="Pipelines allows you to group tickets into lanes and track your business processes all in one place."
+        subheading="Pipelines allows you to group tickets into lanes and
+        track your business processes all in one place."
       >
         <CreatePipelineForm subAccountId={subAccountId} />
       </CustomModal>
