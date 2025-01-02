@@ -1,5 +1,6 @@
 'use client'
 import CreateLaneForm from '@/components/forms/lane-form'
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,17 +25,14 @@ import { deleteLane, saveActivityLogsNotification } from '@/lib/queries'
 import { LaneDetail, TicketWithTags } from '@/lib/types'
 import { cn } from '@/lib/utils'
 import { useModal } from '@/providers/modal-provider'
+import { Draggable, Droppable } from 'react-beautiful-dnd'
 import { Edit, MoreVertical, PlusCircleIcon, Trash } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React, { Dispatch, SetStateAction, useMemo } from 'react'
-// import PipelineTicket from './pipeline-ticket'
-import CustomModal from '@/components/global/custom-modal'
 import PipelineTicket from './pipeline-ticket'
+import CustomModal from '@/components/global/custom-modal'
 import TicketForm from '@/components/forms/ticket-form'
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
-import { DragDropContext, DropResult, Droppable,Draggable } from 'react-beautiful-dnd'
 
-//WIP Wire up tickets
 
 interface PipelaneLaneProps {
   setAllTickets: Dispatch<SetStateAction<TicketWithTags>>
@@ -64,6 +62,7 @@ const PipelineLane: React.FC<PipelaneLaneProps> = ({
   })
 
   const laneAmt = useMemo(() => {
+    console.log(tickets)
     return tickets.reduce(
       (sum, ticket) => sum + (Number(ticket?.value) || 0),
       0
@@ -126,10 +125,14 @@ const PipelineLane: React.FC<PipelaneLaneProps> = ({
       key={laneDetails.id}
     >
       {(provided, snapshot) => {
-        if (snapshot.isDragging && provided.draggableProps.style && 'left' in provided.draggableProps.style && 'top' in provided.draggableProps.style) {
+        if (snapshot.isDragging) {
+          //@ts-ignore
           const offset = { x: 300, y: 0 }
-          const x = provided.draggableProps.style.left - offset.x
-          const y = provided.draggableProps.style.top - offset.y
+          //@ts-ignore
+          const x = provided.draggableProps.style?.left - offset.x
+          //@ts-ignore
+          const y = provided.draggableProps.style?.top - offset.y
+          //@ts-ignore
           provided.draggableProps.style = {
             ...provided.draggableProps.style,
             top: y,
@@ -140,22 +143,18 @@ const PipelineLane: React.FC<PipelaneLaneProps> = ({
           <div
             {...provided.draggableProps}
             ref={provided.innerRef}
-            className="w-[300px] h-[700px] flex-shrink-0"
+            className="h-full"
           >
             <AlertDialog>
               <DropdownMenu>
-                <div className="bg-slate-200/30 dark:bg-background/20  h-
-                [700px] w-[300px] px-4 relative rounded-lg overflow-visible
-                 flex-shrink-0 ">
+                <div className="bg-slate-200/30 dark:bg-background/20  h-[700px] w-[300px] px-4 relative rounded-lg overflow-visible flex-shrink-0 ">
                   <div
                     {...provided.dragHandleProps}
-                    className=" h-14 backdrop-blur-lg dark:bg-background/40
-                     bg-slate-200/60  absolute top-0 left-0 right-0 z-10 "
+                    className=" h-14 backdrop-blur-lg dark:bg-background/40 bg-slate-200/60  absolute top-0 left-0 right-0 z-10 "
                   >
-                    <div className="h-full flex items-center p-4
-                     justify-between cursor-grab border-b-[1px] ">
+                    <div className="h-full flex items-center p-4 justify-between cursor-grab border-b-[1px] ">
                       {/* {laneDetails.order} */}
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center w-full gap-2">
                         <div
                           className={cn('w-4 h-4 rounded-full')}
                           style={{ background: randomColor }}
@@ -169,8 +168,7 @@ const PipelineLane: React.FC<PipelaneLaneProps> = ({
                           {amt.format(laneAmt)}
                         </Badge>
                         <DropdownMenuTrigger>
-                          <MoreVertical className="text-muted-foreground
-                           cursor-pointer" />
+                          <MoreVertical className="text-muted-foreground cursor-pointer" />
                         </DropdownMenuTrigger>
                       </div>
                     </div>
@@ -178,26 +176,27 @@ const PipelineLane: React.FC<PipelaneLaneProps> = ({
 
                   <Droppable
                     droppableId={laneDetails.id.toString()}
-                    
                     key={laneDetails.id}
                     type="ticket"
-                    isDropDisabled={false}
                   >
                     {(provided) => (
-                      <div className=" max-h-[700px] overflow  pt-12 ">
+                      <div className=" max-h-[700px] overflow-scroll pt-12 ">
                         <div
                           {...provided.droppableProps}
-                          
                           ref={provided.innerRef}
-                          
-                          className="h-full"
-
+                          className="mt-2"
                         >
                           {tickets.map((ticket, index) => (
-                            <div key={ticket.id.toString()}></div>
+                            <PipelineTicket
+                              allTickets={allTickets}
+                              setAllTickets={setAllTickets}
+                              subaccountId={subaccountId}
+                              ticket={ticket}
+                              key={ticket.id.toString()}
+                              index={index}
+                            />
                           ))}
-                          {provided.placeholder} 
-                        
+                          {provided.placeholder}
                         </div>
                       </div>
                     )}
@@ -207,8 +206,7 @@ const PipelineLane: React.FC<PipelaneLaneProps> = ({
                     <DropdownMenuLabel>Options</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <AlertDialogTrigger>
-                      <DropdownMenuItem className="flex items-center
-                       gap-2">
+                      <DropdownMenuItem className="flex items-center gap-2">
                         <Trash size={15} />
                         Delete
                       </DropdownMenuItem>
@@ -236,8 +234,7 @@ const PipelineLane: React.FC<PipelaneLaneProps> = ({
                       Are you absolutely sure?
                     </AlertDialogTitle>
                     <AlertDialogDescription>
-                      This action cannot be undone. This will permanently
-                      delete
+                      This action cannot be undone. This will permanently delete
                       your account and remove your data from our servers.
                     </AlertDialogDescription>
                   </AlertDialogHeader>

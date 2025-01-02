@@ -14,7 +14,6 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd'
 import PipelineLane from './pipeline-lane'
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 type Props = {
   lanes: LaneDetail[]
@@ -136,8 +135,7 @@ const PipelineView = ({
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="bg-white/60 dark:bg-background/60 rounded-xl p-4
-      use-automation-zoom-in">
+      <div className="bg-white/60 dark:bg-background/60 rounded-xl p-4 use-automation-zoom-in">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl">{pipelineDetails?.name}</h1>
           <Button
@@ -156,32 +154,30 @@ const PipelineView = ({
         >
           {(provided) => (
             <div
-              className="flex item-center gap-x-2 overflow-x-auto"
+              className="flex item-center gap-x-2 overflow-scroll"
               {...provided.droppableProps}
               ref={provided.innerRef}
-
             >
-              <div className="flex mt-4 gap-4">
-                {allLanes.map((lane,index) => (
-                    <PipelineLane
-                      allTickets={allTickets}
-                      setAllTickets={setAllTickets}
-                      subaccountId={subaccountId}
-                      pipelineId={pipelineId}
-                      tickets={lane.Tickets}
-                      laneDetails={lane}
-                      index={index}
-                      key={lane.id}
-                     />
-                    ))}
-                    {provided.placeholder}
-                </div>
+              <div className="flex mt-4">
+                {allLanes.map((lane, index) => (
+                  <PipelineLane
+                    allTickets={allTickets}
+                    setAllTickets={setAllTickets}
+                    subaccountId={subaccountId}
+                    pipelineId={pipelineId}
+                    tickets={lane.Tickets}
+                    laneDetails={lane}
+                    index={index}
+                    key={lane.id}
+                  />
+                ))}
+                {provided.placeholder}
+              </div>
             </div>
           )}
         </Droppable>
         {allLanes.length == 0 && (
-          <div className="flex items-center justify-center w-full
-           flex-col">
+          <div className="flex items-center justify-center w-full flex-col">
             <div className="opacity-100">
               <Flag
                 width="100%"
