@@ -11,6 +11,11 @@ import { db } from "@/lib/db";
 import { CheckCircleIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { stripe } from '@/lib/stripe'
+import { getStripeOAuthLink } from '@/lib/utils'
+
+
+
 
 type Props={
   params:{
@@ -38,6 +43,30 @@ const LaunchPadPage= async ({params,searchParams}:Props)=>{
    agencyDetails.state &&
    agencyDetails.zipCode
    
+   const stripeOAuthLink = getStripeOAuthLink(
+    'agency',
+    `launchpad___${agencyDetails.id}`
+  )
+
+  let connectedStripeAccount = false
+
+  if (searchParams.code) {
+    if (!agencyDetails.connectAccountId) {
+      try {
+        const response = await stripe.oauth.token({
+          grant_type: 'authorization_code',
+          code: searchParams.code,
+        })
+        await db.agency.update({
+          where: { id: params.agencyId },
+          data: { connectAccountId: response.stripe_user_id },
+        })
+        connectedStripeAccount = true
+      } catch (error) {
+        console.log('🔴 Could not connect stripe account')
+      }
+    }
+  }
   return( 
     <div className="llex flex-col justify-center items-center">
       <div className="w-full h-full max-w-[800px]"></div>
