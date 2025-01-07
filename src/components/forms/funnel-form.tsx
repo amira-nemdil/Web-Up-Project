@@ -32,7 +32,7 @@ interface CreateFunnelProps {
   subAccountId: string
 }
 
-//CHALLENGE: Use favicons
+
 
 const FunnelForm: React.FC<CreateFunnelProps> = ({
   defaultData,

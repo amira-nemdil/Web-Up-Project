@@ -80,8 +80,6 @@ Uploading Images: Enable users to upload and manage media files seamlessly withi
 
 Building Redux/Zustand natively: Handle global state management within the app without external libraries, ensuring the app's reactivity and performance.
 
-Challenge Yourself - Route Segments: Implement complex routing for the agency section, improving navigation and the user experience.
-
 Sidebar & Global State: Create a sidebar navigation system linked to the app's global state, providing users with quick and easy access to different features.
 
 Subdomain Setup in Middleware: Implement subdomain handling to manage multiple agencies or clients within the same app instance.
@@ -105,6 +103,3 @@ Stripe Setup: Configure Stripe to handle payments and billing, integrating it se
 
 Sub Account Billing Page: Implement a billing page for sub-accounts, facilitating invoice management and recurring payments.
 
-Challenge - Add Pro Features: Introduce advanced features to enhance the SaaS platform’s functionality.
-
-Deployment: Set up the application for deployment, ensuring it runs efficiently in a production environment.
