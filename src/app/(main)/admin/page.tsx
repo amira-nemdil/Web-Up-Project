@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { loadModels, detectAndRecognizeFaces } from '../faceRecognition';
+import { loadModels, detectAndRecognizeFaces } from '../../../../faceRecognition';
 export default function AdminPage() {
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
