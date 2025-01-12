@@ -74,7 +74,7 @@ const TicketForm = ({ getNewTicket, laneId, subaccountId }: Props) => {
     defaultValues: {
       name: defaultData.ticket?.name || '',
       description: defaultData.ticket?.description || '',
-      value: String(defaultData.ticket?.value || 0),
+      value: defaultData.ticket?.value?.toString() || '0', // Decimal serialization fixed here
     },
   })
   const isLoading = form.formState.isLoading
@@ -94,7 +94,7 @@ const TicketForm = ({ getNewTicket, laneId, subaccountId }: Props) => {
       form.reset({
         name: defaultData.ticket.name || '',
         description: defaultData.ticket?.description || '',
-        value: String(defaultData.ticket?.value || 0),
+        value: defaultData.ticket?.value?.toString() || '0', // Decimal serialization fixed here
       })
       if (defaultData.ticket.customerId)
         setContact(defaultData.ticket.customerId)

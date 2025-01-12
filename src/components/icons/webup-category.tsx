@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PluraCategory = () => {
+const WebupCategory = () => {
   return (
     <svg
       width="24"
@@ -45,4 +45,4 @@ const PluraCategory = () => {
   );
 };
 
-export default PluraCategory;
+export default WebupCategory;

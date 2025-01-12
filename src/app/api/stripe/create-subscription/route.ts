@@ -4,6 +4,9 @@ import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
   const { customerId, priceId } = await req.json()
+  console.log('🔴🔴🔴🔴🔴Received customerId:', customerId);
+  
+
   if (!customerId || !priceId)
     return new NextResponse('Customer Id or price id is missing', {
       status: 400,
@@ -16,22 +19,22 @@ export async function POST(req: Request) {
 
   try {
     if (
-      subscriptionExists?.Subscription?.subscritiptionId &&
+      subscriptionExists?.Subscription?.subscriptionId &&
       subscriptionExists.Subscription.active
     ) {
       //update the subscription instead of creating one.
-      if (!subscriptionExists.Subscription.subscritiptionId) {
+      if (!subscriptionExists.Subscription.subscriptionId) {
         throw new Error(
           'Could not find the subscription Id to update the subscription.'
         )
       }
       console.log('Updating the subscription')
       const currentSubscriptionDetails = await stripe.subscriptions.retrieve(
-        subscriptionExists.Subscription.subscritiptionId
+        subscriptionExists.Subscription.subscriptionId
       )
 
       const subscription = await stripe.subscriptions.update(
-        subscriptionExists.Subscription.subscritiptionId,
+        subscriptionExists.Subscription.subscriptionId,
         {
           items: [
             {

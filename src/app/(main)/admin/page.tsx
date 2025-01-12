@@ -1,10 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
+import { useEffect, useRef, useState } from 'react';
+import { loadModels, detectAndRecognizeFaces } from '../../../../faceRecognition';
 export default function AdminPage() {
-  const [users, setUsers] = useState<any[]>([]); 
+  const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [recognitionResults, setRecognitionResults] = useState<any[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     // Fetch the users data
@@ -17,7 +19,22 @@ export default function AdminPage() {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+    loadModels();
+  }, []);
 
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const image = event.target.files[0];
+      const imageURL = URL.createObjectURL(image);
+      const imgElement = new Image();
+      imgElement.src = imageURL;
+      imgElement.onload = async () => {
+        const results = await detectAndRecognizeFaces(imgElement);
+        setRecognitionResults(results);
+      };
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -26,6 +43,7 @@ export default function AdminPage() {
   return (
     <div>
       <h1>Admin Panel</h1>
+      <input type="file" ref={inputRef} onChange={handleImageUpload} />
       
       <table>
         <thead>
@@ -55,6 +73,14 @@ export default function AdminPage() {
           ))}
         </tbody>
       </table>
+
+      <div>
+        {recognitionResults.map((result, index) => (
+          <div key={index}>
+            <p>Detected face {index + 1}</p>
+          </div>
+        ))}
+      </div>
 
      
     </div>

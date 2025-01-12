@@ -36,7 +36,7 @@ const page = async ({ params }: Props) => {
   })
 
   const prices = await stripe.prices.list({
-    product: process.env.NEXT_PLURA_PRODUCT_ID,
+    product: process.env.NEXT_WEBUP_PRODUCT_ID,
     active: true,
   })
 
@@ -46,7 +46,7 @@ const page = async ({ params }: Props) => {
 
   const charges = await stripe.charges.list({
     limit: 50,
-    customer: agencySubscription?.customerId,
+   // customer: agencySubscription?.customerId,
   })
 
   const allCharges = [
@@ -87,7 +87,7 @@ const page = async ({ params }: Props) => {
               : 'Get Started'
           }
           highlightDescription="Want to modify your plan? You can do this here. If you have
-          further question contact support@plura-app.com"
+          further question contact support@Webup.com"
           highlightTitle="Plan Options"
           description={
             agencySubscription?.Subscription?.active === true
