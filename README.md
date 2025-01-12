@@ -86,33 +86,6 @@ This list is subject to change based on feature difficulty and project timeline:
 ## Contributions
 We welcome contributions to improve the project. Please follow the standard process for submitting issues and pull requests.
 
-<<<<<<< HEAD
+
 ## License
 This project is licensed under the NIT License.
-=======
-Building Redux/Zustand natively: Handle global state management within the app without external libraries, ensuring the app's reactivity and performance.
-
-Sidebar & Global State: Create a sidebar navigation system linked to the app's global state, providing users with quick and easy access to different features.
-
-Subdomain Setup in Middleware: Implement subdomain handling to manage multiple agencies or clients within the same app instance.
-
-Funnels and Website Builder: Design a user-friendly interface for building websites and funnels, simplifying the creation process for end-users.
-
-Stripe Checkout for Funnels: Integrate Stripe to enable users to handle payments directly through the funnel system.
-
-Backend Development:
-Setup Local Database: Establish a local MySQL database that stores all user, product, and transaction data.
-
-Using Prisma in Next.js 14: Use Prisma to interact with the database, ensuring efficient querying and data manipulation.
-
-Subdomains Architecture Explained: Plan and implement the architecture to handle subdomains, ensuring scalability and multi-tenancy.
-
-Building the Sub Account Section: Set up a system that allows agencies to create and manage sub-accounts, enabling organizational control.
-
-Media Storage for Sub Accounts: Implement dedicated media storage for each sub-account, ensuring data segregation and privacy.
-
-Stripe Setup: Configure Stripe to handle payments and billing, integrating it seamlessly with the SaaS platform.
-
-Sub Account Billing Page: Implement a billing page for sub-accounts, facilitating invoice management and recurring payments.
-
->>>>>>> tertag_noureddine
