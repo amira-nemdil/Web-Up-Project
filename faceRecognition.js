@@ -7,7 +7,7 @@ export async function loadModels() {
   await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
 }
 
-export async function detectFace(video) {
-  const detections = await faceapi.detectAllFaces(video).withFaceLandmarks().withFaceDescriptors();
+export async function detectAndRecognizeFaces(inputImgElement) {
+  const detections = await faceapi.detectAllFaces(inputImgElement).withFaceLandmarks().withFaceDescriptors();
   return detections;
 }
