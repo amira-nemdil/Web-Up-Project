@@ -36,6 +36,7 @@ This list is subject to change based on feature difficulty and project timeline:
 - 🌑 **Light & Dark Mode**
 - 🎨 **Functioning Landing Page**
 - 📈 **Graph and Chart Integrations**
+- 🆔 **AI-Powered Face ID and Recognition**: An optional sign-in feature using face ID and face recognition to facilitate the sign-in process and enhance security as an additional authentication factor.
 
 ### Detailed Features
 - **Multivendor B2B2B SaaS Platform**: Manage multiple vendors within one platform, ideal for users with multiple business partners, clients, or subsidiaries.
