@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { loadModels, detectAndRecognizeFaces } from '../../../../faceRecognition';
+
 export default function AdminPage() {
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -11,16 +12,21 @@ export default function AdminPage() {
   useEffect(() => {
     // Fetch the users data
     async function fetchUsers() {
-      const response = await fetch('/api/dataTables/users');
-      const data = await response.json();
-      setUsers(data);
-      setLoading(false);
+      try {
+        const response = await fetch('/api/dataTables/users');
+        const data = await response.json();
+        setUsers(data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchUsers();
   }, []);
 
   useEffect(() => {
-    loadModels();
+    loadModels().catch((error) => console.error('Error loading models:', error));
   }, []);
 
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,8 +36,12 @@ export default function AdminPage() {
       const imgElement = new Image();
       imgElement.src = imageURL;
       imgElement.onload = async () => {
-        const results = await detectAndRecognizeFaces(imgElement);
-        setRecognitionResults(results);
+        try {
+          const results = await detectAndRecognizeFaces(imgElement);
+          setRecognitionResults(results);
+        } catch (error) {
+          console.error('Error recognizing faces:', error);
+        }
       };
     }
   };
@@ -78,11 +88,10 @@ export default function AdminPage() {
         {recognitionResults.map((result, index) => (
           <div key={index}>
             <p>Detected face {index + 1}</p>
+            {/* Display additional recognition details here */}
           </div>
         ))}
       </div>
-
-     
     </div>
   );
 }
